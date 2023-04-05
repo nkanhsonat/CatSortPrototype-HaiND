@@ -29,7 +29,6 @@ public class Rows : MonoBehaviour
                 poolOfBirds.Add (bird);
             }
         }
-
         //create rows
         for (int i = 0; i < numberOfRow; i++)
         {
@@ -84,13 +83,15 @@ public class Rows : MonoBehaviour
                     if (pickedRow == null)
                     {
                         pickedRow = row;
+
                         //highlight
                         pickedRow.GetComponent<SpriteRenderer>().color =
                             Color.red;
                     }
-                    else {
+                    else
+                    {
                         // blue
-                        OnBirdMove(pickedRow, row);
+                        OnBirdMove (pickedRow, row);
                         pickedRow.GetComponent<SpriteRenderer>().color =
                             Color.white;
                         pickedRow = null;
@@ -109,8 +110,8 @@ public class Rows : MonoBehaviour
 
     public void OnBirdMove(Row from, Row to)
     {
-
         int numberOfBirdMove = GetNumberOfBirdMove(from);
+
         // check if bird can move
         if (from.birds.Count == 0 || to.birds.Count == 4)
         {
@@ -123,16 +124,18 @@ public class Rows : MonoBehaviour
             for (int i = 0; i < numberOfBirdMove; i++)
             {
                 Bird bird = from.birds[from.birds.Count - 1];
-                MoveBird(bird, to);
+                MoveBird (bird, to);
                 from.birds.RemoveAt(from.birds.Count - 1);
-                to.birds.Add(bird);
+                to.birds.Add (bird);
             }
         }
         else
         {
             // check if bird can move
-            if (from.birds[from.birds.Count - 1].idBird ==
-                to.birds[to.birds.Count - 1].idBird)
+            if (
+                from.birds[from.birds.Count - 1].idBird ==
+                to.birds[to.birds.Count - 1].idBird
+            )
             {
                 for (int i = 0; i < numberOfBirdMove; i++)
                 {
@@ -141,9 +144,9 @@ public class Rows : MonoBehaviour
                         break;
                     }
                     Bird bird = from.birds[from.birds.Count - 1];
-                    MoveBird(bird, to);
+                    MoveBird (bird, to);
                     from.birds.RemoveAt(from.birds.Count - 1);
-                    to.birds.Add(bird);
+                    to.birds.Add (bird);
                 }
             }
         }
@@ -166,16 +169,20 @@ public class Rows : MonoBehaviour
         return numberOfBirdMove;
     }
 
-    private void OnClearRow(){
+    private void OnClearRow()
+    {
         // clear row
         for (int i = 0; i < transform.childCount; i++)
         {
             Row row = transform.GetChild(i).GetComponent<Row>();
-            if (row.birds.Count == 4){
+            if (row.birds.Count == 4)
+            {
                 // all same id
-                if (row.birds[0].idBird == row.birds[1].idBird &&
+                if (
+                    row.birds[0].idBird == row.birds[1].idBird &&
                     row.birds[1].idBird == row.birds[2].idBird &&
-                    row.birds[2].idBird == row.birds[3].idBird)
+                    row.birds[2].idBird == row.birds[3].idBird
+                )
                 {
                     for (int j = 0; j < row.birds.Count; j++)
                     {
@@ -188,5 +195,4 @@ public class Rows : MonoBehaviour
             }
         }
     }
-
 }

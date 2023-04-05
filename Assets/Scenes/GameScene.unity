@@ -285,8 +285,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rowPrefab: {fileID: 6549898968957473106, guid: e9cb5107acff09f40bb25b804269e433, type: 3}
   birdPrefab:
-  - {fileID: 9215489255147609263, guid: 6ee69f8f20ecc2b4086611327c25c6e4, type: 3}
-  - {fileID: 5657478592552842012, guid: 70dcb91322d29644b812591839394e85, type: 3}
-  - {fileID: 5657478592552842012, guid: 4ffb138a1fa26564d9f54ec5b8b9e4b0, type: 3}
-  - {fileID: 5657478592552842012, guid: 2cee350e3b7f907489b21ec5ff2c1cfc, type: 3}
+  - {fileID: 5636299337210742190, guid: fec51f945e7ecd34291cbe97669461c9, type: 3}
+  - {fileID: 7106726293701577234, guid: 933d8cd4971c1634fa090ed6aeee0d9f, type: 3}
+  - {fileID: 2780132957938991980, guid: 73ec2a857b8c6104eb10e93169b5b4e5, type: 3}
+  - {fileID: 6359362369801545271, guid: e409babd4a565394587b939c43b5e70d, type: 3}
   numberOfRow: 6
+  pickedRow: {fileID: 0}
