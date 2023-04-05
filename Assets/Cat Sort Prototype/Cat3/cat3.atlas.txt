@@ -1,0 +1,115 @@
+cat3.png
+size:559,559
+filter:Linear,Linear
+pma:true
+scale:0.25
+SHADOW
+bounds:216,122,150,24
+body
+bounds:216,149,131,82
+body2
+bounds:84,6,155,99
+offsets:0,11,155,110
+eye1-l
+bounds:524,340,33,28
+rotate:90
+eye1-r
+bounds:460,75,33,28
+rotate:90
+eye2-l
+bounds:482,41,26,26
+eye2-r
+bounds:482,12,26,26
+eyeclosed-l1
+bounds:534,116,34,22
+rotate:90
+eyeclosed-l2
+bounds:495,92,34,19
+eyeclosed-r1
+bounds:534,79,34,22
+rotate:90
+eyeclosed-r2
+bounds:491,70,34,19
+head
+bounds:230,234,170,124
+leg-back1
+bounds:456,272,53,53
+offsets:3,0,56,53
+leg-back2
+bounds:403,209,51,51
+offsets:2,0,53,51
+leg-front1
+bounds:456,328,65,45
+offsets:0,0,65,46
+leg-front2
+bounds:397,3,60,40
+offsets:0,1,60,42
+rotate:90
+leg-l
+bounds:498,228,41,41
+leg-r
+bounds:512,284,41,41
+leg2-r
+bounds:390,153,37,53
+offsets:0,0,38,53
+mouth
+bounds:511,36,31,19
+rotate:90
+open-mouth
+bounds:415,67,31,42
+rotate:90
+select
+bounds:230,361,195,195
+skin1/BOW
+bounds:430,153,53,33
+rotate:90
+skin1/COLLAR 1
+bounds:350,149,82,37
+rotate:90
+skin1/COLLAR 1-1
+bounds:369,66,80,43
+rotate:90
+skin1/COLLAR 2
+bounds:466,161,52,28
+rotate:90
+skin1/HAT
+bounds:3,3,102,78
+rotate:90
+skin1/HAT RIBBON
+bounds:457,216,53,38
+rotate:90
+skin1/SKIRT
+bounds:242,18,152,45
+skin1/select2
+bounds:3,108,210,207
+skin2/DUCK HEAD
+bounds:403,263,50,95
+skin2/DUCK LEG 1
+bounds:497,153,33,39
+rotate:90
+skin2/DUCK LEG 2
+bounds:495,114,36,36
+skin2/DUCK RING
+bounds:428,376,180,123
+rotate:90
+skin2/DUCK WING 1
+bounds:498,189,41,36
+skin2/DUCK WING 2
+bounds:459,111,39,33
+rotate:90
+skin2/select3
+bounds:3,318,224,238
+sleep mask
+bounds:242,66,124,53
+star1
+bounds:533,54,23,22
+tail
+bounds:440,16,39,48
+tail2
+bounds:415,101,41,49
+whisker-l
+bounds:542,259,22,14
+rotate:90
+whisker-r
+bounds:542,234,22,14
+rotate:90
