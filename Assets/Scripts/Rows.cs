@@ -14,6 +14,7 @@ public class Rows : MonoBehaviour
     public Row pickedRow;
 
     public Row lastRow;
+
     public Row oldPickedRow;
 
     public List<GameObject> poolOfBirds;
@@ -145,8 +146,9 @@ public class Rows : MonoBehaviour
         bird.SetJumpLanding();
         while (timeElapsed < time)
         {
-            bird.transform.position =
-                Vector3.Lerp(from, to, timeElapsed / time);
+            bird.transform.position = Vector3.Lerp(from, to, timeElapsed);
+            // using Sin function to make the bird move in a parabolic path
+            bird.transform.position += Vector3.up * Mathf.Sin(timeElapsed * Mathf.PI) * 1.5f;
             timeElapsed += Time.deltaTime * 1.25f;
             yield return null;
         }
