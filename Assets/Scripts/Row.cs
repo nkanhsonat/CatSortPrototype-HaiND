@@ -23,16 +23,19 @@ public class Row : MonoBehaviour
         }
         AddBirdToEachSlot();
 
-        if (idRow % 2 == 1){
+        if (idRow % 2 == 1)
+        {
             // scale x = -x
             // Get transform of row
             Transform rowTransform = GetComponent<Transform>();
+
             // Get scale of row
             Vector3 rowScale = rowTransform.localScale;
-            // Set scale of row
-            rowTransform.localScale = new Vector3(-rowScale.x, rowScale.y, rowScale.z);
-        }
 
+            // Set scale of row
+            rowTransform.localScale =
+                new Vector3(-rowScale.x, rowScale.y, rowScale.z);
+        }
     }
 
     public bool CheckRowClear()
@@ -51,6 +54,13 @@ public class Row : MonoBehaviour
                     return false;
                 }
             }
+
+            // set all bird in row Cheer
+            for (int i = 0; i < slots.Length; i++)
+            {
+                slots[i].bird.SetCheer();
+            }
+
             return true;
         }
         return false;
@@ -127,4 +137,23 @@ public class Row : MonoBehaviour
         }
         return numberOfBirdMove;
     }
+
+    public void SelectAnimation(){
+        int numberOfBirdMove = GetNumberOfBirdMove();
+        int numberOfBirdOnRow = NumberOfBirdOnRow();
+
+        for (int i = numberOfBirdOnRow - 1; i >= numberOfBirdOnRow - numberOfBirdMove; i--)
+        {
+            slotOfBirds[i].bird.SetSelect();
+        }
+    }
+
+    public void UnSelectAnimation(){
+        int numberOfBirdOnRow = NumberOfBirdOnRow();
+        for (int i = 0; i < numberOfBirdOnRow; i++)
+        {
+            slotOfBirds[i].bird.SetIdle();
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Spine.Unity;
 using UnityEngine;
 
 public class Rows : MonoBehaviour
@@ -11,7 +12,9 @@ public class Rows : MonoBehaviour
     public int numberOfRow = 6;
 
     public Row pickedRow;
+
     public Row lastRow;
+    public Row oldPickedRow;
 
     public List<GameObject> poolOfBirds;
 
@@ -21,6 +24,7 @@ public class Rows : MonoBehaviour
     {
         pickedRow = null;
         lastRow = null;
+        oldPickedRow = null;
 
         // create 4 each bird
         for (int i = 0; i < numberOfRow - 2; i++)
@@ -40,15 +44,14 @@ public class Rows : MonoBehaviour
             Row rowScript = row.GetComponent<Row>();
             rowScript.idRow = i;
         }
-
     }
-
 
     void Update()
     {
         OnClick();
-        if (coroutineAllowed && lastRow != null){
-            ClearRow(lastRow);
+        if (coroutineAllowed && lastRow != null)
+        {
+            StartCoroutine(ClearRow(lastRow));
             lastRow = null;
         }
     }
@@ -67,25 +70,59 @@ public class Rows : MonoBehaviour
                 {
                     if (row == pickedRow)
                     {
-                        pickedRow.GetComponent<SpriteRenderer>().color =
-                            Color.white;
-                        pickedRow = null;
+                        // pickedRow.GetComponent<SpriteRenderer>().color =
+                        //     Color.white;
+                        // pickedRow = null;
+                        // pickedRow.UnSelectAnimation();
+                        return;
                     }
                     else if (pickedRow == null)
                     {
                         pickedRow = row;
                         pickedRow.GetComponent<SpriteRenderer>().color =
                             Color.red;
+                        pickedRow.SelectAnimation();
+                        oldPickedRow = row;
                     }
                     else
                     {
-                        OnBirdMove (pickedRow, row);
-                        pickedRow.GetComponent<SpriteRenderer>().color =
-                            Color.white;
-                        pickedRow = null;
-                        lastRow = row;
+                        if (row.NumberOfBirdOnRow() == 4)
+                        {
+                            oldPickedRow = pickedRow;
+                            pickedRow = row;
+                            pickedRow.GetComponent<SpriteRenderer>().color =
+                                Color.red;
+                            pickedRow.SelectAnimation();
+                            oldPickedRow.UnSelectAnimation();
+                        }
+                        else
+                        {
+                            OnBirdMove (pickedRow, row);
+                            pickedRow.UnSelectAnimation();
+                            oldPickedRow.UnSelectAnimation();
+                            pickedRow.GetComponent<SpriteRenderer>().color =
+                                Color.white;
+                            pickedRow = null;
+                            lastRow = row;
+                        }
                     }
                 }
+            }
+        }
+    }
+
+    IEnumerator ClearRow(Row to)
+    {
+        if (to.CheckRowClear())
+        {
+            yield return new WaitForSeconds(1.5f);
+            for (int i = 3; i >= 0; i--)
+            {
+                Bird bird = to.slotOfBirds[i].bird;
+                bird.gameObject.SetActive(false);
+                poolOfBirds.Add(bird.gameObject);
+                to.slotOfBirds[i].bird = null;
+                to.slotOfBirds[i].SetBirdHold();
             }
         }
     }
@@ -99,32 +136,18 @@ public class Rows : MonoBehaviour
         bird.transform.SetParent(to.transform);
     }
 
-    public void ClearRow(Row to)
-    {
-        if (to.CheckRowClear())
-        {
-            for (int i = to.NumberOfBirdOnRow() - 1; i >= 0; i--)
-            {
-                Bird bird = to.slotOfBirds[i].bird;
-                bird.gameObject.SetActive(false);
-                poolOfBirds.Add(bird.gameObject);
-                to.slotOfBirds[i].bird = null;
-                to.slotOfBirds[i].SetBirdHold();
-            }
-        }
-    }
-
     IEnumerator MoveBirdLinear(Vector3 from, Vector3 to, Bird bird)
     {
         //Using Vector3.Lerp
         coroutineAllowed = false;
         float timeElapsed = 0;
         float time = 1f;
+        bird.SetJumpLanding();
         while (timeElapsed < time)
         {
             bird.transform.position =
                 Vector3.Lerp(from, to, timeElapsed / time);
-            timeElapsed += Time.deltaTime * 2;
+            timeElapsed += Time.deltaTime * 1.25f;
             yield return null;
         }
         coroutineAllowed = true;
@@ -132,11 +155,6 @@ public class Rows : MonoBehaviour
 
     public void OnBirdMove(Row from, Row to)
     {
-        if (from.NumberOfBirdOnRow() == 0 || to.NumberOfBirdOnRow() == 4)
-        {
-            return;
-        }
-
         int numberOfBirdMove = from.GetNumberOfBirdMove();
 
         if (IsSameBird(from, to))
@@ -170,7 +188,11 @@ public class Rows : MonoBehaviour
 
     public bool IsSameBird(Row from, Row to)
     {
-        if (to.NumberOfBirdOnRow() == 0)
+        if (from.NumberOfBirdOnRow() == 0)
+        {
+            return false;
+        }
+        else if (to.NumberOfBirdOnRow() == 0)
         {
             return true;
         }
@@ -180,5 +202,4 @@ public class Rows : MonoBehaviour
             to.slotOfBirds[to.NumberOfBirdOnRow() - 1].idBirdHold;
         }
     }
-
 }

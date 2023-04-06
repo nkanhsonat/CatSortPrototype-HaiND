@@ -142,6 +142,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idBird: 4
+  idleAnimationName: Idle
+  jumpAnimationName: Jump
+  landingAnimationName: Landing
+  cheerAnimationName: Cheer
+  selectAnimationName: Select
 --- !u!114 &8829078238580055190
 MonoBehaviour:
   m_ObjectHideFlags: 0
