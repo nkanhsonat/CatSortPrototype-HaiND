@@ -11,13 +11,16 @@ public class Rows : MonoBehaviour
     public int numberOfRow = 6;
 
     public Row pickedRow;
+    public Row lastRow;
 
-    List<GameObject> poolOfBirds;
+    public List<GameObject> poolOfBirds;
+
+    public bool coroutineAllowed = true;
 
     void Start()
     {
         pickedRow = null;
-        poolOfBirds = new List<GameObject>();
+        lastRow = null;
 
         // create 4 each bird
         for (int i = 0; i < numberOfRow - 2; i++)
@@ -29,48 +32,30 @@ public class Rows : MonoBehaviour
                 poolOfBirds.Add (bird);
             }
         }
-        //create rows
+
+        // create rows
         for (int i = 0; i < numberOfRow; i++)
         {
             GameObject row = Instantiate(rowPrefab, transform);
             Row rowScript = row.GetComponent<Row>();
             rowScript.idRow = i;
-
-            //display birds on row, row has horizontal layout group
-            for (int j = 0; j < 4; j++)
-            {
-                //random
-                if (poolOfBirds.Count == 0)
-                {
-                    break;
-                }
-                else
-                {
-                    GameObject bird =
-                        poolOfBirds[Random.Range(0, poolOfBirds.Count)];
-
-                    // add bird to row
-                    rowScript.birds.Add(bird.GetComponent<Bird>());
-                    poolOfBirds.RemoveAt(poolOfBirds.IndexOf(bird));
-                    bird.SetActive(true);
-                    bird.transform.SetParent(row.transform);
-                    bird.transform.localPosition = Vector3.zero;
-                }
-            }
         }
+
     }
+
 
     void Update()
     {
         OnClick();
-        OnClearRow();
+        if (coroutineAllowed && lastRow != null){
+            ClearRow(lastRow);
+            lastRow = null;
+        }
     }
 
-    // each row has collider
-    // if click mouse on row, red
     public void OnClick()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && coroutineAllowed)
         {
             Vector3 mousePos =
                 Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -80,119 +65,120 @@ public class Rows : MonoBehaviour
                 Row row = hit.collider.GetComponent<Row>();
                 if (row != null)
                 {
-                    if (pickedRow == null)
+                    if (row == pickedRow)
+                    {
+                        pickedRow.GetComponent<SpriteRenderer>().color =
+                            Color.white;
+                        pickedRow = null;
+                    }
+                    else if (pickedRow == null)
                     {
                         pickedRow = row;
-
-                        //highlight
                         pickedRow.GetComponent<SpriteRenderer>().color =
                             Color.red;
                     }
                     else
                     {
-                        // blue
                         OnBirdMove (pickedRow, row);
                         pickedRow.GetComponent<SpriteRenderer>().color =
                             Color.white;
                         pickedRow = null;
+                        lastRow = row;
                     }
                 }
             }
         }
     }
 
-    public void MoveBird(Bird bird, Row to)
+    public void MoveBird(Bird bird, Slot to)
     {
-        // move bird position
+        // bird.transform.position = to.transform.position;
+        Vector3 from = bird.transform.position;
+        Vector3 toPos = to.transform.position;
+        StartCoroutine(MoveBirdLinear(from, toPos, bird));
         bird.transform.SetParent(to.transform);
-        bird.transform.localPosition = Vector3.zero;
+    }
+
+    public void ClearRow(Row to)
+    {
+        if (to.CheckRowClear())
+        {
+            for (int i = to.NumberOfBirdOnRow() - 1; i >= 0; i--)
+            {
+                Bird bird = to.slotOfBirds[i].bird;
+                bird.gameObject.SetActive(false);
+                poolOfBirds.Add(bird.gameObject);
+                to.slotOfBirds[i].bird = null;
+                to.slotOfBirds[i].SetBirdHold();
+            }
+        }
+    }
+
+    IEnumerator MoveBirdLinear(Vector3 from, Vector3 to, Bird bird)
+    {
+        //Using Vector3.Lerp
+        coroutineAllowed = false;
+        float timeElapsed = 0;
+        float time = 1f;
+        while (timeElapsed < time)
+        {
+            bird.transform.position =
+                Vector3.Lerp(from, to, timeElapsed / time);
+            timeElapsed += Time.deltaTime * 2;
+            yield return null;
+        }
+        coroutineAllowed = true;
     }
 
     public void OnBirdMove(Row from, Row to)
     {
-        int numberOfBirdMove = GetNumberOfBirdMove(from);
-
-        // check if bird can move
-        if (from.birds.Count == 0 || to.birds.Count == 4)
+        if (from.NumberOfBirdOnRow() == 0 || to.NumberOfBirdOnRow() == 4)
         {
             return;
         }
 
-        // check if bird can move
-        if (to.birds.Count == 0)
+        int numberOfBirdMove = from.GetNumberOfBirdMove();
+
+        if (IsSameBird(from, to))
         {
             for (int i = 0; i < numberOfBirdMove; i++)
             {
-                Bird bird = from.birds[from.birds.Count - 1];
-                MoveBird (bird, to);
-                from.birds.RemoveAt(from.birds.Count - 1);
-                to.birds.Add (bird);
+                if (to.NumberOfBirdOnRow() == 4)
+                {
+                    break;
+                }
+                Slot fromSlot = from.slotOfBirds[from.NumberOfBirdOnRow() - 1];
+                Slot toSlot = to.slotOfBirds[to.NumberOfBirdOnRow()];
+                if ((from.idRow + to.idRow) % 2 != 0)
+                {
+                    fromSlot.bird.FlipBirdImage();
+                }
+                SwapBird (fromSlot, toSlot);
             }
+        }
+    }
+
+    public void SwapBird(Slot from, Slot to)
+    {
+        Bird bird = from.bird;
+        MoveBird (bird, to);
+        from.bird = to.bird;
+        to.bird = bird;
+        from.SetBirdHold();
+        to.SetBirdHold();
+    }
+
+    public bool IsSameBird(Row from, Row to)
+    {
+        if (to.NumberOfBirdOnRow() == 0)
+        {
+            return true;
         }
         else
         {
-            // check if bird can move
-            if (
-                from.birds[from.birds.Count - 1].idBird ==
-                to.birds[to.birds.Count - 1].idBird
-            )
-            {
-                for (int i = 0; i < numberOfBirdMove; i++)
-                {
-                    if (to.birds.Count == 4)
-                    {
-                        break;
-                    }
-                    Bird bird = from.birds[from.birds.Count - 1];
-                    MoveBird (bird, to);
-                    from.birds.RemoveAt(from.birds.Count - 1);
-                    to.birds.Add (bird);
-                }
-            }
+            return from.slotOfBirds[from.NumberOfBirdOnRow() - 1].idBirdHold ==
+            to.slotOfBirds[to.NumberOfBirdOnRow() - 1].idBirdHold;
         }
     }
 
-    private int GetNumberOfBirdMove(Row from)
-    {
-        int numberOfBirdMove = 1;
-        for (int i = from.birds.Count - 1; i > 0; i--)
-        {
-            if (from.birds[i].idBird == from.birds[i - 1].idBird)
-            {
-                numberOfBirdMove++;
-            }
-            else
-            {
-                break;
-            }
-        }
-        return numberOfBirdMove;
-    }
-
-    private void OnClearRow()
-    {
-        // clear row
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Row row = transform.GetChild(i).GetComponent<Row>();
-            if (row.birds.Count == 4)
-            {
-                // all same id
-                if (
-                    row.birds[0].idBird == row.birds[1].idBird &&
-                    row.birds[1].idBird == row.birds[2].idBird &&
-                    row.birds[2].idBird == row.birds[3].idBird
-                )
-                {
-                    for (int j = 0; j < row.birds.Count; j++)
-                    {
-                        Bird bird = row.birds[j];
-                        bird.gameObject.SetActive(false);
-                        poolOfBirds.Add(bird.gameObject);
-                    }
-                    row.birds.Clear();
-                }
-            }
-        }
-    }
 }
