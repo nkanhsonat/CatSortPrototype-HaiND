@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6359362369801545269}
   - component: {fileID: 6359362369801545270}
   - component: {fileID: -8595060721420061479}
-  - component: {fileID: 8829078238580055190}
+  - component: {fileID: 4198177856287069468}
   m_Layer: 0
   m_Name: 4
   m_TagString: Untagged
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6359362369801545271}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ead0696ad27b23a44911221f6e92b775, type: 3}
   m_Name: 
@@ -147,7 +147,7 @@ MonoBehaviour:
   landingAnimationName: Landing
   cheerAnimationName: Cheer
   selectAnimationName: Select
---- !u!114 &8829078238580055190
+--- !u!114 &4198177856287069468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,14 +156,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6359362369801545271}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e9c34deeaba32f4b86c5841e3365890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: 1
-  m_FlexibleHeight: 1
-  m_LayoutPriority: 1
+  idCat: 4

@@ -5,28 +5,28 @@ using UnityEngine;
 
 public class Rows : MonoBehaviour
 {
-    public GameObject rowPrefab;
+    [SerializeField] private GameObject rowPrefab;
 
-    public GameObject[] birdPrefab;
+    [SerializeField] private GameObject[] birdPrefab;
 
-    public int numberOfRow = 6;
+    [SerializeField] private int numberOfRow = 6;
 
-    public Row pickedRow;
+    private Row pickedRow;
 
-    public Row lastRow;
+    private Row lastRow;
 
-    public Row oldPickedRow;
+    private Row oldPickedRow;
 
     public List<GameObject> poolOfBirds;
 
-    public bool coroutineAllowed = true;
+    private bool coroutineAllowed = true;
+
 
     void Start()
     {
         pickedRow = null;
         lastRow = null;
         oldPickedRow = null;
-
         // create 4 each bird
         for (int i = 0; i < numberOfRow - 2; i++)
         {
@@ -37,7 +37,6 @@ public class Rows : MonoBehaviour
                 poolOfBirds.Add (bird);
             }
         }
-
         // create rows
         for (int i = 0; i < numberOfRow; i++)
         {
@@ -49,15 +48,17 @@ public class Rows : MonoBehaviour
 
     void Update()
     {
-        OnClick();
-        if (coroutineAllowed && lastRow != null)
-        {
-            StartCoroutine(ClearRow(lastRow));
-            lastRow = null;
-        }
+    
+            OnClick();
+            if (lastRow != null)
+            {
+                StartCoroutine(ClearRow(lastRow));
+                lastRow = null;
+            }
+      
     }
 
-    public void OnClick()
+    private void OnClick()
     {
         if (Input.GetMouseButtonDown(0) && coroutineAllowed)
         {
@@ -80,8 +81,6 @@ public class Rows : MonoBehaviour
                     else if (pickedRow == null)
                     {
                         pickedRow = row;
-                        pickedRow.GetComponent<SpriteRenderer>().color =
-                            Color.red;
                         pickedRow.SelectAnimation();
                         oldPickedRow = row;
                     }
@@ -91,8 +90,6 @@ public class Rows : MonoBehaviour
                         {
                             oldPickedRow = pickedRow;
                             pickedRow = row;
-                            pickedRow.GetComponent<SpriteRenderer>().color =
-                                Color.red;
                             pickedRow.SelectAnimation();
                             oldPickedRow.UnSelectAnimation();
                         }
@@ -101,8 +98,6 @@ public class Rows : MonoBehaviour
                             OnBirdMove (pickedRow, row);
                             pickedRow.UnSelectAnimation();
                             oldPickedRow.UnSelectAnimation();
-                            pickedRow.GetComponent<SpriteRenderer>().color =
-                                Color.white;
                             pickedRow = null;
                             lastRow = row;
                         }
@@ -128,7 +123,7 @@ public class Rows : MonoBehaviour
         }
     }
 
-    public void MoveBird(Bird bird, Slot to)
+    private void MoveBird(Bird bird, Slot to)
     {
         // bird.transform.position = to.transform.position;
         Vector3 from = bird.transform.position;
@@ -139,8 +134,6 @@ public class Rows : MonoBehaviour
 
     IEnumerator MoveBirdLinear(Vector3 from, Vector3 to, Bird bird)
     {
-        //Using Vector3.Lerp
-        coroutineAllowed = false;
         float timeElapsed = 0;
         float time = 1f;
         bird.SetJumpLanding();
@@ -152,10 +145,9 @@ public class Rows : MonoBehaviour
             timeElapsed += Time.deltaTime * 1.25f;
             yield return null;
         }
-        coroutineAllowed = true;
     }
 
-    public void OnBirdMove(Row from, Row to)
+    private void OnBirdMove(Row from, Row to)
     {
         int numberOfBirdMove = from.GetNumberOfBirdMove();
 
@@ -178,7 +170,7 @@ public class Rows : MonoBehaviour
         }
     }
 
-    public void SwapBird(Slot from, Slot to)
+    private void SwapBird(Slot from, Slot to)
     {
         Bird bird = from.bird;
         MoveBird (bird, to);
@@ -188,7 +180,7 @@ public class Rows : MonoBehaviour
         to.SetBirdHold();
     }
 
-    public bool IsSameBird(Row from, Row to)
+    private bool IsSameBird(Row from, Row to)
     {
         if (from.NumberOfBirdOnRow() == 0)
         {
@@ -204,4 +196,20 @@ public class Rows : MonoBehaviour
             to.slotOfBirds[to.NumberOfBirdOnRow() - 1].idBirdHold;
         }
     }
+
+    private bool IsGameOver()
+    {
+        //Check poolOfBirds has 4 * (numberOfRow - 2) birds
+        Debug.Log(poolOfBirds.Count);
+        Debug.Log(4 * (numberOfRow - 2));
+        if (poolOfBirds.Count == 4 * (numberOfRow - 2))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }

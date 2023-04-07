@@ -6,7 +6,7 @@ public class Row : MonoBehaviour
 {
     public int idRow;
 
-    public GameObject slotPrefab;
+    [SerializeField] private GameObject slotPrefab;
 
     public List<Slot> slotOfBirds;
 
