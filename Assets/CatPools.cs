@@ -14,24 +14,22 @@ public class CatPools : MonoBehaviour
         {
             for (int j = 0; j < 4; j++)
             {
-                GameObject cat = Instantiate(catPrefab[i], transform);
+                GameObject cat =
+                    Instantiate(catPrefab[i],
+                    transform.position,
+                    Quaternion.identity);
                 cat.SetActive(false);
-                catPool.Add(cat);
+                cat.GetComponent<Cat>().idCat = i;
+                catPool.Add (cat);
             }
         }
     }
 
-    public GameObject GetCatRandomFromPool()
+    public GameObject GetCatRandom()
     {
-        int randomIndex = Random.Range(0, catPool.Count);
-        GameObject cat = catPool[randomIndex];
-        catPool.RemoveAt(randomIndex);
+        GameObject cat = catPool[Random.Range(0, catPool.Count)];
+        cat.SetActive(true);
+        catPool.Remove (cat);
         return cat;
     }
-
-    public int GetCatPoolCount()
-    {
-        return catPool.Count;
-    }
-
 }

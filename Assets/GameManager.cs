@@ -19,7 +19,5 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         catPools.CreateCatPool(numberOfRow);
-        branchManager.CreateBranch(numberOfRow);
     }
-
 }

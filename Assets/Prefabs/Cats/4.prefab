@@ -159,4 +159,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e9c34deeaba32f4b86c5841e3365890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idCat: 4
+  idCat: 3
+  idleAnimationName: Idle
+  jumpAnimationName: Jump
+  landingAnimationName: Landing
+  cheerAnimationName: Cheer
+  selectAnimationName: Select
