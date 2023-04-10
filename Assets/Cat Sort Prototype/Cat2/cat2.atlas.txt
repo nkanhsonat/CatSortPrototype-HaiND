@@ -1,0 +1,175 @@
+cat2.png
+size:920,920
+filter:Linear,Linear
+pma:true
+scale:0.4
+$
+bounds:742,76,44,58
+$ eff1
+bounds:746,35,38,49
+offsets:0,2,43,51
+rotate:90
+$ eff2
+bounds:798,36,44,52
+offsets:0,1,44,54
+rotate:90
+$ eff3
+bounds:853,132,44,46
+offsets:0,2,44,51
+rotate:90
+$ eff4
+bounds:789,83,43,57
+offsets:0,0,43,58
+$ eff5
+bounds:735,137,43,32
+offsets:1,0,44,38
+CHAIN
+bounds:509,748,197,56
+CHAIN eff1
+bounds:697,207,36,38
+offsets:0,1,36,39
+CHAIN eff2
+bounds:697,69,65,42
+offsets:0,1,65,46
+rotate:90
+CHAIN eff3
+bounds:424,807,110,33
+offsets:0,0,110,34
+CHAIN eff4
+bounds:601,248,81,52
+offsets:0,0,84,54
+CHAIN eff5
+bounds:685,248,52,48
+offsets:1,0,53,48
+rotate:90
+CHAIN eff6
+bounds:709,3,27,39
+offsets:3,1,30,40
+rotate:90
+EARRINGS 2
+bounds:670,808,32,28
+rotate:90
+EARRINGS 2-2
+bounds:585,822,16,13
+rotate:90
+GLASSES
+bounds:509,563,182,80
+rotate:90
+GLASSES2
+bounds:502,21,221,82
+rotate:90
+HAIR 1
+bounds:736,213,80,84
+rotate:90
+HAIR 2
+bounds:437,689,44,68
+rotate:90
+HAT1
+bounds:709,457,198,117
+HAT2
+bounds:326,559,172,108
+rotate:90
+HOOD
+bounds:326,843,210,74
+HOOD-side
+bounds:587,31,211,107
+rotate:90
+HOODIE - BODY
+bounds:709,836,206,81
+HOODIE - BODY-side
+bounds:709,577,198,154
+STRING 1
+bounds:537,810,28,45
+rotate:90
+STRING 2
+bounds:781,143,26,47
+rotate:90
+SUPCAT BEANIE
+bounds:331,11,231,168
+rotate:90
+body
+bounds:709,734,203,99
+body2
+bounds:3,5,226,149
+rotate:90
+ear-l
+bounds:326,734,95,106
+ear-r
+bounds:601,543,90,123
+eye-l1
+bounds:437,555,66,62
+rotate:90
+eye-l2
+bounds:835,88,41,41
+eye-r1
+bounds:437,624,67,62
+eye-r2
+bounds:853,44,41,41
+eyeclosed-l1
+bounds:736,172,67,38
+eyeclosed-l2
+bounds:697,137,67,35
+rotate:90
+eyeclosed-r1
+bounds:823,179,67,39
+eyeclosed-r2
+bounds:601,807,66,33
+eyesbrown1
+bounds:502,3,17,15
+eyesbrown2
+bounds:522,3,17,15
+glasses eff
+bounds:758,296,156,71
+offsets:1,1,158,73
+gold_teeth
+bounds:542,3,15,14
+rotate:90
+gold_tooth
+bounds:559,4,42,14
+head
+bounds:155,7,224,173
+rotate:90
+leg-back1
+bounds:601,453,89,87
+leg-back2
+bounds:601,303,86,83
+leg-front1
+bounds:601,843,103,74
+leg-front2
+bounds:601,389,88,61
+leg-l
+bounds:601,669,76,93
+rotate:90
+leg-r
+bounds:823,221,72,76
+rotate:90
+mouth
+bounds:604,4,54,24
+mouth-shadow
+bounds:751,6,52,26
+openmouth
+bounds:697,33,33,46
+rotate:90
+select
+bounds:308,245,290,307
+select2
+bounds:3,234,302,318
+select3
+bounds:3,555,320,362
+sleep mask
+bounds:709,370,198,84
+spark
+bounds:690,303,65,64
+offsets:3,3,71,70
+tail
+bounds:424,736,68,82
+rotate:90
+tail2
+bounds:539,841,59,76
+offsets:1,1,65,78
+whisker-l
+bounds:661,4,24,21
+rotate:90
+whisker-r
+bounds:685,4,24,21
+rotate:90
