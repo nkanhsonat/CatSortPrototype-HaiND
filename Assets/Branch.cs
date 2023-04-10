@@ -24,6 +24,7 @@ public class Branch : MonoBehaviour, IObservable
                 .GetComponent<CatSpawner>();
         catSpawner.SpawnCat(this);
         FlipBranch();
+        UpBranch();
     }
 
     public void FlipBranch()
@@ -31,6 +32,16 @@ public class Branch : MonoBehaviour, IObservable
         if (idBranch % 2 == 1)
         {
             transform.Rotate(0, 180, 0);
+        }
+    }
+
+    public void UpBranch(){
+        // if number of row is even
+        if (GameManager.instance.numberOfRow % 2 == 0){
+            if (idBranch % 2 == 1){
+                // move up 1.5f y
+                transform.position += new Vector3(0, 1.5f, 0);
+            }
         }
     }
 
@@ -48,6 +59,37 @@ public class Branch : MonoBehaviour, IObservable
     public bool IsEmpty()
     {
         return catStack.Count == 0;
+    }
+
+    public bool IsBranchWinning()
+    {
+        if (IsFull())
+        {
+            int idCatTopOfStack = catStack.Peek().GetComponent<Cat>().idCat;
+            foreach (GameObject cat in catStack)
+            {
+                if (cat.GetComponent<Cat>().idCat != idCatTopOfStack)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void SetCheerAnimation()
+    {
+        foreach (GameObject cat in catStack)
+        {
+            cat.GetComponent<Cat>().SetCheer();
+        }
+    }
+
+    public void OnClear()
+    {
+        catSpawner.ReturnCat(this);
+        catStack.Clear();
     }
 
     public int CatAbleMove()

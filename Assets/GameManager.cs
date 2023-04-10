@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [SerializeField] public int numberOfRow = 6;
+    [SerializeField] public int numberOfRow;
     
     public BranchManager branchManager;
 

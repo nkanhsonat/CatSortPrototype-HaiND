@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class BranchManager : MonoBehaviour, IObserver, MoveManager
 {
@@ -79,15 +81,36 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
             if (IsMoveValid(branch1, branch2))
             {
                 GameObject cat = branch1.catStack.Pop();
-                branch2.catStack.Push (cat);
+                cat.GetComponent<Cat>().SetJumpAndLanding();
+                branch2.catStack.Push(cat);
                 cat.transform.SetParent(branch2.transform);
-                cat.transform.localPosition = new Vector3(0, 0, 0);
+                // cat.transform.localPosition = new Vector3(0, 0, 0);
+                Vector3 newPosition = new Vector3(-2.4f + 1.8f*(branch2.catStack.Count - 1), 0, 0);
+                cat.transform.DOLocalJump(newPosition, 3f, 1, 0.5f).OnComplete(() => {
+                    if ((branch1.idBranch + branch2.idBranch) % 2 != 0)
+                {
+                    cat.GetComponent<Cat>().FlipCat();
+                }
+                });               
             }
             else
             {
                 break;
             }
         }
+
+        if (branch2.IsBranchWinning())
+        {
+            // branch2.SetCheerAnimation();
+            // branch2.OnClear();
+
+            //set cheer animation in 2s and clear
+            branch2.SetCheerAnimation();
+            DOVirtual.DelayedCall(2f, () => {
+                branch2.OnClear();
+            });
+        }
+
     }
 
     public bool IsMoveValid(Branch branch1, Branch branch2)

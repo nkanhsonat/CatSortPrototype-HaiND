@@ -7,6 +7,10 @@ public class CatSpawner : MonoBehaviour
     // CatSpawner
     // CatPools and Branch
     // Branch spawn Cat
+    // isntance
+
+    public static CatSpawner instance;
+
     public CatPools catPools;
 
     public int numberOfRow;
@@ -25,14 +29,24 @@ public class CatSpawner : MonoBehaviour
         for (int i = 0; i < numberOfRow - 2; i++)
         {
             // Spawn Cat
-            if (catPools.catPool.Count > 0)
+            if (catPools.catPool.Count > 0 && branch.catStack.Count < 4)
             {
                 GameObject cat = catPools.GetCatRandom();
-                cat.transform.SetParent(branch.transform);
-                cat.transform.localPosition = new Vector3(0, 0, 0);
-
                 branch.catStack.Push(cat);
+                cat.transform.SetParent(branch.transform);
+                cat.transform.localPosition = new Vector3(-2.4f + 1.8f*(branch.catStack.Count - 1), 0, 0);
             }
         }
     }
+
+    public void ReturnCat(Branch branch)
+    {
+        while (branch.catStack.Count > 0)
+        {
+            GameObject cat = branch.catStack.Pop();
+            cat.SetActive(false);
+            catPools.catPool.Add(cat);
+        }
+    }
+
 }
