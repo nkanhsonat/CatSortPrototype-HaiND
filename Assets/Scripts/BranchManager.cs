@@ -111,8 +111,7 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
 
         if (movedCat > 0)
         {
-            Action action = new Action(branch1, branch2, movedCat);
-            actionManager.AddAction(action);
+            actionManager.AddAction(new Action(branch1, branch2, movedCat));
         }
 
         if (branch2.IsBranchWinning())

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ActionManager : MonoBehaviour
 {
     public Stack<Action> actions = new Stack<Action>();
-
+    
     public void AddAction(Action action)
     {
         actions.Push(action);

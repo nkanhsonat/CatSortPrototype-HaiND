@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public class Action : MonoBehaviour
+public class Action
 {
     public Branch fromBranch;
-
     public Branch toBranch;
-
     public int movedCat;
+
     public Action(Branch fromBranch, Branch toBranch, int movedCat)
     {
         this.fromBranch = fromBranch;
