@@ -31,8 +31,10 @@ public class Action
             cat.transform.SetParent(fromBranch.transform);
 
             Vector3 newPosition = new Vector3(-2.4f + 1.8f * (fromBranch.catStack.Count - 1), 0, 0);
+            fromBranch.isJumping = true;
             cat.transform.DOLocalJump(newPosition, 3f, 1, 0.5f).OnComplete(() =>
             {
+                fromBranch.isJumping = false;
                 if ((toBranch.idBranch + fromBranch.idBranch) % 2 != 0){
                     cat.GetComponent<Cat>().FlipCat();
                 }

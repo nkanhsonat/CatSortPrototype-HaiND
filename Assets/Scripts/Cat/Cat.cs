@@ -8,7 +8,6 @@ public class Cat : MonoBehaviour
 {
     public int idCat;
 
-
 #region
     [SpineAnimation]
     public string idleAnimationName;

@@ -15,6 +15,8 @@ public class Branch : MonoBehaviour, IObservable
 
     public bool isCheering = false;
 
+    public bool isJumping = false;
+
     void Start()
     {
         catStack = new Stack<GameObject>();

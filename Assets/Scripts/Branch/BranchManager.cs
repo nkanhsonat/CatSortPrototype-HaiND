@@ -16,9 +16,6 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
 
     public ActionManager actionManager;
 
-
-
-
     void Awake()
     {
         instance = this;
@@ -36,6 +33,10 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
 
     public void OnBranchSelected(Branch branch)
     {
+        if (branch.isJumping || branch.isCheering)
+        {
+            return;
+        }
         if (selectedBranch == null)
         {
             if (!branch.IsEmpty())
@@ -90,16 +91,17 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
                 branch2.catStack.Push (cat);
                 cat.transform.SetParent(branch2.transform);
 
-                // cat.transform.localPosition = new Vector3(0, 0, 0);
                 Vector3 newPosition =
                     new Vector3(-2.4f + 1.8f * (branch2.catStack.Count - 1),
                         0,
                         0);
+                branch2.isJumping = true;
                 cat
                     .transform
                     .DOLocalJump(newPosition, 3f, 1, 0.5f)
                     .OnComplete(() =>
                     {
+                        branch2.isJumping = false;
                         if ((branch1.idBranch + branch2.idBranch) % 2 != 0)
                         {
                             cat.GetComponent<Cat>().FlipCat();
