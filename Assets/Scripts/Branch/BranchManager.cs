@@ -169,10 +169,20 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
 
     public void DestroyAllBranch()
     {
+        // remove branch from branches and destroy
         foreach (Branch branch in branches)
         {
-            branch.RemoveObserver(this);
-            Destroy(branch.gameObject);
-        }
+            branch.SlipOutHorizontal();            
+        }   
     }
+
+    public void RestartGame()
+    {
+        foreach (Branch branch in branches)
+        {
+            branch.SlipOutHorizontal();
+        }
+        CatPools.instance.ClearCatPool();
+    }
+
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Branch : MonoBehaviour, IObservable
@@ -29,6 +30,7 @@ public class Branch : MonoBehaviour, IObservable
         catSpawner.SpawnCat(this);
         FlipBranch();
         UpBranch();
+        SlipInHorizontal();
     }
 
     public void FlipBranch()
@@ -157,4 +159,19 @@ public class Branch : MonoBehaviour, IObservable
             observer.OnBranchSelected(this);
         }
     }
+
+    public void SlipOutHorizontal()
+    {
+        // move from x to x * 3
+        transform.DOMoveX(transform.position.x * 3, 0.5f).OnComplete(() =>
+        {
+            Destroy(gameObject);
+        });
+    }
+
+    public void SlipInHorizontal()
+    {
+        transform.DOMoveX(transform.position.x / 3, 0.5f);
+    }
+
 }

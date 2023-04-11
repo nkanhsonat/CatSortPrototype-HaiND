@@ -5,19 +5,9 @@ using UnityEngine;
 public class BranchSpawner : MonoBehaviour
 {
     public GameObject branchPrefab;
-
-    // private float CalculateX()
-    // {
-    //     float aspectRatio = (float) Screen.height / (float) Screen.width;
-    //     if (aspectRatio > 1.9f){
-    //         return 2.7f;
-    //     }
-    //     return 3.3f;
-    // }
-
     public Branch[] Spawn(int numberOfRow)
     {
-        float x = 3.3f;
+        float x = 9.9f;
         for (int i = 0; i < numberOfRow; i++)
         {
             GameObject branch =

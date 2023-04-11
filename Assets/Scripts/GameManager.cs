@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     public MenuController menuController;
 
+    public bool isRestarting = false;
+
     private void Awake() {
         instance = this;
     }
@@ -27,6 +29,20 @@ public class GameManager : MonoBehaviour
 
     public void OnGameOver(){
         menuController.ReplayGame();
+    }
+
+    public void RestartGame(){
+        if (isRestarting) return;
+        isRestarting = true;
+        branchManager.RestartGame();
+        // menuController.ReplayRandomGame();
+        // wait 2s to call menuController.ReplayRandomGame()
+        Invoke("ReplayRandomGame", 1f);
+    }
+
+    public void ReplayRandomGame(){
+        menuController.ReplayRandomGame();
+        isRestarting = false;
     }
 
 }

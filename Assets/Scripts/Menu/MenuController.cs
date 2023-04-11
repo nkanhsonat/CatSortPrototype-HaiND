@@ -32,6 +32,16 @@ public class MenuController : MonoBehaviour
         game.SetActive(false);
         menu.SetActive(true);
     }
+
+    public void ReplayRandomGame(){
+        gameManager.SetActive(false);
+        game.SetActive(false);
+        numberOfRows = Random.Range(6, 10);
+
+        gameManager.SetActive(true);
+        game.SetActive(true);
+
+    }
     
     public void OnButtonPress()
     {

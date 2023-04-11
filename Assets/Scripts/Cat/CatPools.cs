@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class CatPools : MonoBehaviour
 {
+    public static CatPools instance;
+
     public List<GameObject> catPool;
 
     public GameObject[] catPrefab;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public void CreateCatPool(int numberOfRow)
     {
@@ -32,4 +39,10 @@ public class CatPools : MonoBehaviour
         catPool.Remove (cat);
         return cat;
     }
+
+    public void ClearCatPool()
+    {
+        catPool.Clear();
+    }
+
 }
