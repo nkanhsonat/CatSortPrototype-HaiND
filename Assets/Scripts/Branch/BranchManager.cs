@@ -16,6 +16,9 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
 
     public ActionManager actionManager;
 
+
+
+
     void Awake()
     {
         instance = this;
@@ -117,11 +120,13 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
         if (branch2.IsBranchWinning())
         {
             branch2.SetCheerAnimation();
+            branch2.isCheering = true;
             DOVirtual
-                .DelayedCall(2f,
+                .DelayedCall(1.5f,
                 () =>
                 {
                     branch2.OnClear();
+                    branch2.isCheering = false;
                     if (IsGameOver())
                     {
                         GameManager.instance.OnGameOver();

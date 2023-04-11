@@ -64,7 +64,6 @@ public class Cat : MonoBehaviour
 
     public void SetCheer()
     {
-        skeletonAnimation.AnimationState.SetAnimation(1, cheerAnimationName, true);
+        skeletonAnimation.AnimationState.SetAnimation(0, cheerAnimationName, true);
     }
-
 }

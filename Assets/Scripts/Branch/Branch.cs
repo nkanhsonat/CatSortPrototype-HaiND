@@ -13,6 +13,8 @@ public class Branch : MonoBehaviour, IObservable
 
     private List<IObserver> observers = new List<IObserver>();
 
+    public bool isCheering = false;
+
     void Start()
     {
         catStack = new Stack<GameObject>();
@@ -95,6 +97,11 @@ public class Branch : MonoBehaviour, IObservable
     {
         catSpawner.RemoveCat(this);
         catStack.Clear();
+    }
+
+    public void OnReturn()
+    {
+        catSpawner.ReturnCat(this);
     }
 
     public int CatAbleMove()

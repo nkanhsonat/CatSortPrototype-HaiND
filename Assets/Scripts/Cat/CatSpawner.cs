@@ -44,9 +44,28 @@ public class CatSpawner : MonoBehaviour
         while (branch.catStack.Count > 0)
         {
             GameObject cat = branch.catStack.Pop();
-            Destroy(cat);
+            // send cat to CatPools
+            catPools.catPool.Add(cat);
+            cat.SetActive(false);
+            // Destroy(cat);
         }
     }
+
+    public void ReturnCat(Branch branch)
+    {
+        // return 4 cat RemoveCat latest
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject cat = catPools.catPool[catPools.catPool.Count - 1];
+            catPools.catPool.Remove(cat);
+            branch.catStack.Push(cat);
+            cat.transform.SetParent(branch.transform);
+            cat.transform.localPosition = new Vector3(-2.4f + 1.8f*(branch.catStack.Count - 1), 0, 0);
+            cat.SetActive(true);
+            cat.GetComponent<Cat>().SetIdle();
+        }
+    }
+
 
     // public void ReturnCat(Branch branch)
     // {

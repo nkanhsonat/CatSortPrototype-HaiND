@@ -13,10 +13,10 @@ public class ActionManager : MonoBehaviour
 
     public void Undo()
     {
-        if (actions.Count > 0)
+        if (actions.Count > 0 && !actions.Peek().toBranch.isCheering)
         {
             Action action = actions.Pop();
-            action.Undo();
+            action.Undo();           
         }
     }
 

@@ -18,6 +18,11 @@ public class Action
 
     public void Undo()
     {
+        if (toBranch.IsEmpty())
+        {
+            toBranch.OnReturn();
+        }
+
         for (int i = 0; i < movedCat; i++)
         {
             GameObject cat = toBranch.catStack.Pop();
