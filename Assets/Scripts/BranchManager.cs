@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 
 public class BranchManager : MonoBehaviour, IObserver, MoveManager
 {
@@ -19,10 +19,9 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
         instance = this;
     }
 
-    void Start()
+    void OnEnable()
     {
-        branchSpawner.Spawn(GameManager.instance.numberOfRow);
-        branches = FindObjectsOfType<Branch>();
+        branches = branchSpawner.Spawn(GameManager.instance.numberOfRow);
         selectedBranch = null;
         foreach (Branch branch in branches)
         {
@@ -32,7 +31,6 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
 
     public void OnBranchSelected(Branch branch)
     {
-        Debug.Log("BranchManager: OnBranchSelected");
         if (selectedBranch == null)
         {
             if (!branch.IsEmpty())
@@ -82,16 +80,24 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
             {
                 GameObject cat = branch1.catStack.Pop();
                 cat.GetComponent<Cat>().SetJumpAndLanding();
-                branch2.catStack.Push(cat);
+                branch2.catStack.Push (cat);
                 cat.transform.SetParent(branch2.transform);
+
                 // cat.transform.localPosition = new Vector3(0, 0, 0);
-                Vector3 newPosition = new Vector3(-2.4f + 1.8f*(branch2.catStack.Count - 1), 0, 0);
-                cat.transform.DOLocalJump(newPosition, 3f, 1, 0.5f).OnComplete(() => {
-                    if ((branch1.idBranch + branch2.idBranch) % 2 != 0)
-                {
-                    cat.GetComponent<Cat>().FlipCat();
-                }
-                });               
+                Vector3 newPosition =
+                    new Vector3(-2.4f + 1.8f * (branch2.catStack.Count - 1),
+                        0,
+                        0);
+                cat
+                    .transform
+                    .DOLocalJump(newPosition, 3f, 1, 0.5f)
+                    .OnComplete(() =>
+                    {
+                        if ((branch1.idBranch + branch2.idBranch) % 2 != 0)
+                        {
+                            cat.GetComponent<Cat>().FlipCat();
+                        }
+                    });
             }
             else
             {
@@ -101,16 +107,19 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
 
         if (branch2.IsBranchWinning())
         {
-            // branch2.SetCheerAnimation();
-            // branch2.OnClear();
-
-            //set cheer animation in 2s and clear
             branch2.SetCheerAnimation();
-            DOVirtual.DelayedCall(2f, () => {
-                branch2.OnClear();
-            });
+            DOVirtual
+                .DelayedCall(2f,
+                () =>
+                {
+                    branch2.OnClear();
+                    if (IsGameOver())
+                    {
+                        GameManager.instance.OnGameOver();
+                        DestroyAllBranch();
+                    }
+                });
         }
-
     }
 
     public bool IsMoveValid(Branch branch1, Branch branch2)
@@ -123,14 +132,31 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
         {
             return false;
         }
-        int idCatTopOfStack1 =
-            branch1.catStack.Peek().GetComponent<Cat>().idCat;
-        int idCatTopOfStack2 =
-            branch2.catStack.Peek().GetComponent<Cat>().idCat;
-        if (idCatTopOfStack1 == idCatTopOfStack2)
+        if (branch1.GetIdCatOnTop() == branch2.GetIdCatOnTop())
         {
             return true;
         }
         return false;
+    }
+
+    public bool IsGameOver()
+    {
+        foreach (Branch branch in branches)
+        {
+            if (!branch.IsEmpty())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void DestroyAllBranch()
+    {
+        foreach (Branch branch in branches)
+        {
+            branch.RemoveObserver(this);
+            Destroy(branch.gameObject);
+        }
     }
 }

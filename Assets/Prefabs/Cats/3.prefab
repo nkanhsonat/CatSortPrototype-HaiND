@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2780132957938991971}
   - component: {fileID: 2780132957938991970}
   - component: {fileID: 2780132957938991981}
-  - component: {fileID: 4835084635345519450}
   - component: {fileID: -3642279532213915328}
   m_Layer: 0
   m_Name: 3
@@ -129,24 +128,6 @@ MonoBehaviour:
   _animationName: 
   loop: 1
   timeScale: 1.5
---- !u!114 &4835084635345519450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2780132957938991980}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ead0696ad27b23a44911221f6e92b775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  idBird: 3
-  idleAnimationName: Idle
-  jumpAnimationName: Jump
-  landingAnimationName: Landing
-  cheerAnimationName: Cheer
-  selectAnimationName: Select
 --- !u!114 &-3642279532213915328
 MonoBehaviour:
   m_ObjectHideFlags: 0

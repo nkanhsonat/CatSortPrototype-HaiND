@@ -15,7 +15,7 @@ public class CatSpawner : MonoBehaviour
 
     public int numberOfRow;
 
-    void Start()
+    void OnEnable()
     {
         //get CatPools from GameManager
         catPools = GameManager.instance.catPools;
@@ -39,14 +39,27 @@ public class CatSpawner : MonoBehaviour
         }
     }
 
-    public void ReturnCat(Branch branch)
+    public void RemoveCat(Branch branch)
     {
         while (branch.catStack.Count > 0)
         {
             GameObject cat = branch.catStack.Pop();
-            cat.SetActive(false);
-            catPools.catPool.Add(cat);
+            Destroy(cat);
         }
     }
+
+    // public void ReturnCat(Branch branch)
+    // {
+    //     while (branch.catStack.Count > 0)
+    //     {
+    //         GameObject cat = branch.catStack.Pop();
+    //         cat.transform.SetParent(transform);
+    //         cat.transform.localPosition = new Vector3(0, 0, 0);
+    //         cat.SetActive(false);
+    //         catPools.catPool.Add(cat);
+    //         // cat.SetActive(false);
+    //         // catPools.catPool.Add(cat);
+    //     }
+    // }
 
 }

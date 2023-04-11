@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1347441166833208094}
   - component: {fileID: 6549898968957473104}
-  - component: {fileID: 6549898968957473105}
-  - component: {fileID: 8232233885310088013}
   - component: {fileID: 7024984465256685970}
   - component: {fileID: 1605141258709919516}
   m_Layer: 0
@@ -93,41 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6549898968957473105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6549898968957473106}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094bc6d8355093e49a4e801d76b4bad2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  idRow: 0
-  slotPrefab: {fileID: 2666124509883645119, guid: 2be9eb8b19f79f241857335f98aff3fb, type: 3}
-  slotOfBirds: []
---- !u!114 &8232233885310088013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6549898968957473106}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: 1
-  m_FlexibleHeight: 1
-  m_LayoutPriority: 1
 --- !u!61 &7024984465256685970
 BoxCollider2D:
   m_ObjectHideFlags: 0

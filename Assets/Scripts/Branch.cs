@@ -51,6 +51,11 @@ public class Branch : MonoBehaviour, IObservable
         NotifyObservers();
     }
 
+    public int GetIdCatOnTop()
+    {
+        return catStack.Peek().GetComponent<Cat>().idCat;
+    }
+
     public bool IsFull()
     {
         return catStack.Count == 4;
@@ -65,7 +70,7 @@ public class Branch : MonoBehaviour, IObservable
     {
         if (IsFull())
         {
-            int idCatTopOfStack = catStack.Peek().GetComponent<Cat>().idCat;
+            int idCatTopOfStack = GetIdCatOnTop();
             foreach (GameObject cat in catStack)
             {
                 if (cat.GetComponent<Cat>().idCat != idCatTopOfStack)
@@ -88,14 +93,14 @@ public class Branch : MonoBehaviour, IObservable
 
     public void OnClear()
     {
-        catSpawner.ReturnCat(this);
+        catSpawner.RemoveCat(this);
         catStack.Clear();
     }
 
     public int CatAbleMove()
     {
         int catAbleMove = 0;
-        int idCatTopOfStack = catStack.Peek().GetComponent<Cat>().idCat;
+        int idCatTopOfStack = GetIdCatOnTop();
         foreach (GameObject cat in catStack)
         {
             if (cat.GetComponent<Cat>().idCat == idCatTopOfStack)

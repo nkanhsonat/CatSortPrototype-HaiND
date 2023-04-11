@@ -13,12 +13,20 @@ public class GameManager : MonoBehaviour
 
     public CatPools catPools;
 
+    public MenuController menuController;
+
     private void Awake() {
         instance = this;
     }
 
-    void Start()
+    void OnEnable()
     {
+        numberOfRow = menuController.numberOfRows;
         catPools.CreateCatPool(numberOfRow);
     }
+
+    public void OnGameOver(){
+        menuController.ReplayGame();
+    }
+
 }

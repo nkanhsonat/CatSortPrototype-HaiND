@@ -12,35 +12,40 @@ public class MenuController : MonoBehaviour
     [SerializeField]
     // public TMPro.TMP_InputField numberOfRowInput;
     public TMP_InputField numberOfRowInput;
-
     public GameObject gameManager;
     public GameObject game;
+    public GameObject menu;
 
-    private void LoadGame(int numberOfRows)
+    public int numberOfRows;
+
+    private void LoadGame()
     {
         gameManager.SetActive(true);
-        GameManager.instance.numberOfRow = numberOfRows;
         // enable game object
         game.SetActive(true);
+        menu.SetActive(false);
     }
 
-    // if input field is 6,7,8,9, when press button, load GameScene, and set numberOfRows equal to inputField.text
+    public void ReplayGame()
+    {
+        gameManager.SetActive(false);
+        game.SetActive(false);
+        menu.SetActive(true);
+    }
+    
     public void OnButtonPress()
     {
-        int numberOfRows;
-        if (int.TryParse(numberOfRowInput.text, out numberOfRows))
-        {
-            switch (numberOfRows)
+        try {
+            numberOfRows = int.Parse(numberOfRowInput.text);
+            if (numberOfRows > 5 && numberOfRows < 10)
             {
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                    LoadGame(numberOfRows);
-                    break;
-                default:
-                    break;
+                LoadGame();
             }
         }
+        catch (System.Exception e)
+        {
+            Debug.Log(e);
+        }
+
     }
 }
