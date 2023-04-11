@@ -14,6 +14,8 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
 
     public Branch selectedBranch;
 
+    public ActionManager actionManager;
+
     void Awake()
     {
         instance = this;
@@ -74,10 +76,12 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
     public void OnMove(Branch branch1, Branch branch2)
     {
         int numberOfCatMove = branch1.CatAbleMove();
+        int movedCat = 0;
         for (int i = 0; i < numberOfCatMove; i++)
         {
             if (IsMoveValid(branch1, branch2))
             {
+                movedCat++;
                 GameObject cat = branch1.catStack.Pop();
                 cat.GetComponent<Cat>().SetJumpAndLanding();
                 branch2.catStack.Push (cat);
@@ -103,6 +107,12 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
             {
                 break;
             }
+        }
+
+        if (movedCat > 0)
+        {
+            Action action = new Action(branch1, branch2, movedCat);
+            actionManager.AddAction(action);
         }
 
         if (branch2.IsBranchWinning())
