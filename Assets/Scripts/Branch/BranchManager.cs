@@ -131,8 +131,7 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
                     branch2.isCheering = false;
                     if (IsGameOver())
                     {
-                        GameManager.instance.OnGameOver();
-                        DestroyAllBranch();
+                        GameManager.instance.RestartGame();
                     }
                 });
         }

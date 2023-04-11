@@ -27,10 +27,6 @@ public class GameManager : MonoBehaviour
         catPools.CreateCatPool(numberOfRow);
     }
 
-    public void OnGameOver(){
-        menuController.ReplayGame();
-    }
-
     public void RestartGame(){
         if (isRestarting) return;
         isRestarting = true;
