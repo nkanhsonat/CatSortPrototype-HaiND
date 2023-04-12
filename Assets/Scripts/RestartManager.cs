@@ -5,11 +5,9 @@ using UnityEngine;
 public class RestartManager : MonoBehaviour
 {
 
-    public BranchManager branchManager;
-
     public void RestartGame()
     {
-        branchManager.RestartGame();
+        BranchManager.instance.RestartGame();
     }
 
 }

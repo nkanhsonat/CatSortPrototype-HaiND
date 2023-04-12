@@ -6,6 +6,8 @@ using TMPro;
 
 public class MenuController : MonoBehaviour
 {
+    public static MenuController instance;
+
     [SerializeField]
     public Button button;
 
@@ -17,6 +19,12 @@ public class MenuController : MonoBehaviour
     public GameObject menu;
 
     public int numberOfRows;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
 
     private void LoadGame()
     {

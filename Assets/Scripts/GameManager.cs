@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
 
     public CatPools catPools;
 
-    public MenuController menuController;
-
     public bool isRestarting = false;
 
     private void Awake() {
@@ -23,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     void OnEnable()
     {
-        numberOfRow = menuController.numberOfRows;
+        numberOfRow = MenuController.instance.numberOfRows;
         catPools.CreateCatPool(numberOfRow);
     }
 
@@ -31,13 +29,11 @@ public class GameManager : MonoBehaviour
         if (isRestarting) return;
         isRestarting = true;
         branchManager.RestartGame();
-        // menuController.ReplayRandomGame();
-        // wait 2s to call menuController.ReplayRandomGame()
         Invoke("ReplayRandomGame", 1f);
     }
 
     public void ReplayRandomGame(){
-        menuController.ReplayRandomGame();
+        MenuController.instance.ReplayRandomGame();
         isRestarting = false;
     }
 

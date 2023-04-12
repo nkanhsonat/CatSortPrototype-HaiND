@@ -7,10 +7,7 @@ public class Branch : MonoBehaviour, IObservable
 {
     public int idBranch;
 
-    // Stack of Cats
     public Stack<GameObject> catStack;
-
-    public CatSpawner catSpawner;
 
     private List<IObserver> observers = new List<IObserver>();
 
@@ -21,13 +18,7 @@ public class Branch : MonoBehaviour, IObservable
     void Start()
     {
         catStack = new Stack<GameObject>();
-
-        // catSpawner finds by tag
-        catSpawner =
-            GameObject
-                .FindGameObjectWithTag("CatSpawner")
-                .GetComponent<CatSpawner>();
-        catSpawner.SpawnCat(this);
+        CatSpawner.instance.SpawnCat(this);
         FlipBranch();
         UpBranch();
         SlipInHorizontal();
@@ -99,13 +90,13 @@ public class Branch : MonoBehaviour, IObservable
 
     public void OnClear()
     {
-        catSpawner.RemoveCat(this);
+        CatSpawner.instance.RemoveCat(this);
         catStack.Clear();
     }
 
     public void OnReturn()
     {
-        catSpawner.ReturnCat(this);
+        CatSpawner.instance.ReturnCat(this);
     }
 
     public int CatAbleMove()

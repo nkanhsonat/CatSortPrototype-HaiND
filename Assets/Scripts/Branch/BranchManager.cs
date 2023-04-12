@@ -4,17 +4,13 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public class BranchManager : MonoBehaviour, IObserver, MoveManager
+public class BranchManager : MonoBehaviour, IObserver, IMoveManager
 {
     public static BranchManager instance;
-
-    public BranchSpawner branchSpawner;
 
     public Branch[] branches;
 
     public Branch selectedBranch;
-
-    public ActionManager actionManager;
 
     void Awake()
     {
@@ -23,7 +19,7 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
 
     void OnEnable()
     {
-        branches = branchSpawner.Spawn(GameManager.instance.numberOfRow);
+        branches = BranchSpawner.instance.Spawn(GameManager.instance.numberOfRow);
         selectedBranch = null;
         foreach (Branch branch in branches)
         {
@@ -56,7 +52,6 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
             {
                 selectedBranch.SetIdleAnimation();
                 selectedBranch = branch;
-
                 selectedBranch.SetSelectedAnimation();
             }
             else
@@ -116,7 +111,7 @@ public class BranchManager : MonoBehaviour, IObserver, MoveManager
 
         if (movedCat > 0)
         {
-            actionManager.AddAction(new Action(branch1, branch2, movedCat));
+            ActionManager.instance.AddAction(new Action(branch1, branch2, movedCat));
         }
 
         if (branch2.IsBranchWinning())

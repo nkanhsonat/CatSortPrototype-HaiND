@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class ActionManager : MonoBehaviour
 {
+    public static ActionManager instance;
+
     public Stack<Action> actions = new Stack<Action>();
     
+    void Awake()
+    {
+        instance = this;
+    }
+
     public void AddAction(Action action)
     {
         actions.Push(action);
