@@ -50,4 +50,14 @@ public class BranchSpawner : MonoBehaviour
             Destroy (branch);
         }
     }
+
+    // public Branch SpawnNewBranch(){
+    //     GameObject branch =
+    //         Instantiate(branchPrefab,
+    //         transform.position,
+    //         Quaternion.identity);
+    //     branch.transform.SetParent (transform);
+    //     return branch.GetComponent<Branch>();
+    // }
+
 }

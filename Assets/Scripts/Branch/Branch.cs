@@ -164,5 +164,4 @@ public class Branch : MonoBehaviour, IObservable
     {
         transform.DOMoveX(transform.position.x / 3, 0.5f);
     }
-
 }

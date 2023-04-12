@@ -179,4 +179,8 @@ public class BranchManager : MonoBehaviour, IObserver, IMoveManager
         CatPools.instance.ClearCatPool();
     }
 
+    public void AddBranch(){
+        
+    }
+
 }
