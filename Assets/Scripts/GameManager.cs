@@ -9,14 +9,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public int numberOfRow;
     
-    public BranchManager branchManager;
-
     public CatPools catPools;
-
-    public bool isRestarting = false;
 
     private void Awake() {
         instance = this;
+
+        Application.targetFrameRate = 60;
     }
 
     void OnEnable()
@@ -26,15 +24,15 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame(){
-        if (isRestarting) return;
-        isRestarting = true;
-        branchManager.RestartGame();
+        if (RestartManager.instance.isRestarting) return;
+        RestartManager.instance.isRestarting = true;
+        BranchManager.instance.RestartGame();
         Invoke("ReplayRandomGame", 1f);
     }
 
     public void ReplayRandomGame(){
         MenuController.instance.ReplayRandomGame();
-        isRestarting = false;
+        RestartManager.instance.isRestarting = false;
     }
 
 }

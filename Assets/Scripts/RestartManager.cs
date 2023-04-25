@@ -5,9 +5,17 @@ using UnityEngine;
 public class RestartManager : MonoBehaviour
 {
 
-    public void RestartGame()
+    public static RestartManager instance;
+
+    public bool isRestarting = false;
+
+    void Awake()
     {
-        BranchManager.instance.RestartGame();
+        instance = this;
     }
 
+    public void RestartGame()
+    {
+        GameManager.instance.RestartGame();
+    }
 }

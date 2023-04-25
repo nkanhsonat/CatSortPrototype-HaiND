@@ -8,7 +8,10 @@ public class BranchManager : MonoBehaviour, IObserver, IMoveManager
 {
     public static BranchManager instance;
 
-    public Branch[] branches;
+    // public Branch[] branches;
+
+    public List<Branch> branches;
+
 
     public Branch selectedBranch;
 
@@ -20,6 +23,8 @@ public class BranchManager : MonoBehaviour, IObserver, IMoveManager
     void OnEnable()
     {
         branches = BranchSpawner.instance.Spawn(GameManager.instance.numberOfRow);
+        // if GameManager.instance.numberOfRow odd, down branch has id odd
+        DownBranch();   
         selectedBranch = null;
         foreach (Branch branch in branches)
         {
@@ -39,6 +44,9 @@ public class BranchManager : MonoBehaviour, IObserver, IMoveManager
             {
                 selectedBranch = branch;
                 selectedBranch.SetSelectedAnimation();
+            }
+            else {
+                return;
             }
         }
         else
@@ -176,11 +184,96 @@ public class BranchManager : MonoBehaviour, IObserver, IMoveManager
         {
             branch.SlipOutHorizontal();
         }
+
         CatPools.instance.ClearCatPool();
+        ActionManager.instance.ClearActions();
+        AddBranchManager.instance.EnableAddBranchButton();
+
     }
 
-    public void AddBranch(){
-        
+    public void AddBranch()
+    {
+        Branch newBranch = BranchSpawner.instance.SpawnOne();
+        // add new branch to branches
+        branches.Add(newBranch);
+        newBranch.AddObserver(this);
+        UpBranch();
     }
+
+    public void UpBranch()
+    {
+        if (branches.Count % 2 == 1)
+        {
+            foreach (Branch branch in branches)
+            {
+                if (branch.idBranch % 2 == 0)
+                {
+                    branch.UpBranch();
+                }
+            }
+        }
+        else
+        {
+            foreach (Branch branch in branches)
+            {
+                if (branch.idBranch % 2 == 1)
+                {
+                    branch.UpBranch();
+                }
+            }
+        }
+    }
+
+    public void DownBranch()
+    {
+        if (branches.Count % 2 == 1)
+        {
+            foreach (Branch branch in branches)
+            {
+                if (branch.idBranch % 2 == 1)
+                {
+                    branch.DownBranch();
+                }
+            }
+        }
+    }
+
+
+
+    // public void AddBranch(){
+    //     Branch newBranch = BranchSpawner.instance.SpawnOne();
+    //     // add new branch to branches
+    //     Array.Resize(ref branches, branches.Length + 1);
+    //     branches[branches.Length - 1] = newBranch;
+    //     newBranch.AddObserver(this);
+    //     UpBranch();
+    // }
+
+    // public void UpBranch(){
+    //     if (branches.Length % 2 == 1){
+    //         foreach (Branch branch in branches){
+    //             if (branch.idBranch % 2 == 0){
+    //                 branch.UpBranch();
+    //             }
+    //         }
+    //     }
+    //     else {
+    //         foreach (Branch branch in branches){
+    //             if (branch.idBranch % 2 == 1){
+    //                 branch.UpBranch();
+    //             }
+    //         }
+    //     }
+    // }
+
+    // public void DownBranch(){
+    //     if (branches.Length % 2 == 1){
+    //         foreach (Branch branch in branches){
+    //             if (branch.idBranch % 2 == 1){
+    //                 branch.DownBranch();
+    //             }
+    //         }
+    //     }
+    // }
 
 }

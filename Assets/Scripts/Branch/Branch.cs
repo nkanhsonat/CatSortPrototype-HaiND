@@ -7,7 +7,7 @@ public class Branch : MonoBehaviour, IObservable
 {
     public int idBranch;
 
-    public Stack<GameObject> catStack;
+    public Stack<GameObject> catStack = new Stack<GameObject>();
 
     private List<IObserver> observers = new List<IObserver>();
 
@@ -17,11 +17,13 @@ public class Branch : MonoBehaviour, IObservable
 
     void Start()
     {
-        catStack = new Stack<GameObject>();
-        CatSpawner.instance.SpawnCat(this);
         FlipBranch();
-        UpBranch();
         SlipInHorizontal();
+    }
+
+    public void SpawnCatWhenStart()
+    {
+        CatSpawner.instance.SpawnCat(this);
     }
 
     public void FlipBranch()
@@ -32,14 +34,13 @@ public class Branch : MonoBehaviour, IObservable
         }
     }
 
-    public void UpBranch(){
-        // if number of row is even
-        if (GameManager.instance.numberOfRow % 2 == 0){
-            if (idBranch % 2 == 1){
-                // move up 1.5f y
-                transform.position += new Vector3(0, 1.5f, 0);
-            }
-        }
+    public void UpBranch()
+    {
+        transform.position += new Vector3(0, 1.5f, 0);
+    }
+
+    public void DownBranch(){
+        transform.position += new Vector3(0, -1.5f, 0);
     }
 
     void OnMouseDown()
@@ -164,4 +165,7 @@ public class Branch : MonoBehaviour, IObservable
     {
         transform.DOMoveX(transform.position.x / 3, 0.5f);
     }
+
+
+
 }

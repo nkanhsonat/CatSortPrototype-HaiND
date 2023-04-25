@@ -7,7 +7,7 @@ public class ActionManager : MonoBehaviour
     public static ActionManager instance;
 
     public Stack<Action> actions = new Stack<Action>();
-    
+
     void Awake()
     {
         instance = this;
@@ -15,15 +15,26 @@ public class ActionManager : MonoBehaviour
 
     public void AddAction(Action action)
     {
-        actions.Push(action);
+        actions.Push (action);
     }
 
     public void Undo()
     {
-        if (actions.Count > 0 && !(actions.Peek().toBranch.isCheering || actions.Peek().toBranch.isJumping))
+        if (
+            actions.Count > 0 &&
+            !(
+            actions.Peek().toBranch.isCheering ||
+            actions.Peek().toBranch.isJumping
+            )
+        )
         {
             Action action = actions.Pop();
-            action.Undo();           
+            action.Undo();
         }
+    }
+
+    public void ClearActions()
+    {
+        actions.Clear();
     }
 }
